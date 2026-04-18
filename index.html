@@ -1,43 +1,449 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Hentai Casino 🎰</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hentai Casino</title>
+  <meta name="description" content="Premium online entertainment platform." />
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      background: #0f172a;
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top, #1e293b 0%, #0f172a 45%, #020617 100%);
       color: white;
-      font-family: Arial;
-      text-align: center;
-      padding-top: 100px;
+      min-height: 100vh;
     }
-    h1 {
-      font-size: 48px;
+
+    .topbar {
+      width: 100%;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.18);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
-    p {
-      color: #ccc;
+
+    .brand {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
     }
-    button {
-      margin-top: 30px;
-      padding: 15px 40px;
+
+    .brand span {
+      color: #facc15;
+    }
+
+    .nav {
+      display: flex;
+      gap: 18px;
+      font-size: 14px;
+      color: #cbd5e1;
+    }
+
+    .hero {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 70px 20px 40px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      margin: 0 0 16px;
+      font-size: 56px;
+      line-height: 1.02;
+    }
+
+    .hero p {
+      color: #cbd5e1;
       font-size: 18px;
+      line-height: 1.6;
+      max-width: 650px;
+      margin-bottom: 24px;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 26px;
+    }
+
+    .badge {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #e2e8f0;
+      font-size: 14px;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    button, .secondary-btn {
       border: none;
-      border-radius: 10px;
-      background: linear-gradient(90deg, #00c6ff, #0072ff);
-      color: white;
       cursor: pointer;
+      border-radius: 14px;
+      padding: 16px 24px;
+      font-size: 17px;
+      font-weight: 700;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    button:hover, .secondary-btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.96;
+    }
+
+    .primary-btn {
+      background: linear-gradient(90deg, #22c55e, #facc15);
+      color: #0f172a;
+      box-shadow: 0 10px 30px rgba(250, 204, 21, 0.18);
+    }
+
+    .secondary-btn {
+      background: rgba(255,255,255,0.08);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .hero-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.32);
+    }
+
+    .jackpot {
+      font-size: 14px;
+      color: #cbd5e1;
+      margin-bottom: 10px;
+    }
+
+    .jackpot-amount {
+      font-size: 42px;
+      font-weight: 800;
+      color: #facc15;
+      margin-bottom: 18px;
+    }
+
+    .mini-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .stat {
+      background: rgba(15,23,42,0.55);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .stat .label {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-bottom: 6px;
+    }
+
+    .stat .value {
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 18px 20px 60px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .feature {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 18px;
+      padding: 22px;
+    }
+
+    .feature h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .feature p {
+      margin: 0;
+      color: #cbd5e1;
+      line-height: 1.5;
+      font-size: 15px;
+    }
+
+    .proof {
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .proof-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 18px;
+      padding: 18px;
+      text-align: center;
+    }
+
+    .proof-card .num {
+      font-size: 26px;
+      font-weight: 800;
+      color: #facc15;
+      margin-bottom: 6px;
+    }
+
+    .proof-card .txt {
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+
+    .modal-wrap {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 23, 0.78);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 100;
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 440px;
+      background: #111827;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 26px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+      text-align: center;
+    }
+
+    .modal h2 {
+      margin: 0 0 10px;
+      font-size: 28px;
+    }
+
+    .modal p {
+      margin: 0 0 22px;
+      color: #cbd5e1;
+      line-height: 1.55;
+    }
+
+    .modal .modal-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .modal .confirm {
+      background: linear-gradient(90deg, #22c55e, #facc15);
+      color: #0f172a;
+    }
+
+    .modal .cancel {
+      background: rgba(255,255,255,0.08);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .footer {
+      text-align: center;
+      color: #64748b;
+      font-size: 13px;
+      padding: 24px 20px 38px;
+    }
+
+    @media (max-width: 860px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 42px;
+      }
+
+      .feature-grid,
+      .proof {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="topbar">
+    <div class="brand">Hentai<span>Casino</span> 🎰</div>
+    <div class="nav">
+      <div>Games</div>
+      <div>Promotions</div>
+      <div>VIP</div>
+      <div>Support</div>
+    </div>
+  </div>
 
-<h1>Hentai Casino 🎰</h1>
-<p>The #1 online crypto casino experience is now live.</p>
-<p>Massive bonuses. Real players. Instant withdrawals.</p>
+  <section class="hero">
+    <div>
+      <h1>Premium crypto casino access starts here.</h1>
+      <p>
+        Welcome to the next generation of online entertainment. Fast access,
+        premium rewards, live promotions, and an exclusive VIP experience built
+        for serious players.
+      </p>
 
-<button onclick="window.location.href='https://youtu.be/dQw4w9WgXcQ'">
-  Enter Casino 🎰
-</button>
+      <div class="badge-row">
+        <div class="badge">⚡ Instant Access</div>
+        <div class="badge">💸 Daily Rewards</div>
+        <div class="badge">🔒 Secure Platform</div>
+        <div class="badge">👥 12,847 Online</div>
+      </div>
 
+      <div class="cta-row">
+        <button class="primary-btn" id="openModalBtn">Claim Welcome Bonus</button>
+        <a class="secondary-btn" href="#features">Explore Features</a>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <div class="jackpot">LIVE JACKPOT</div>
+      <div class="jackpot-amount">$184,927.44</div>
+
+      <div class="mini-stats">
+        <div class="stat">
+          <div class="label">Welcome Bonus</div>
+          <div class="value">$10,000</div>
+        </div>
+        <div class="stat">
+          <div class="label">Players Online</div>
+          <div class="value">12,847</div>
+        </div>
+        <div class="stat">
+          <div class="label">Withdrawals Today</div>
+          <div class="value">4,932</div>
+        </div>
+        <div class="stat">
+          <div class="label">VIP Members</div>
+          <div class="value">1,204</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <div class="feature-grid">
+      <div class="feature">
+        <h3>🎁 Massive Promotions</h3>
+        <p>Unlock daily bonuses, seasonal rewards, and exclusive first-time player offers.</p>
+      </div>
+      <div class="feature">
+        <h3>⚡ Instant Gameplay</h3>
+        <p>One-click access to featured games, tournaments, and premium events.</p>
+      </div>
+      <div class="feature">
+        <h3>👑 VIP Experience</h3>
+        <p>Level up your account with high-value benefits, priority support, and elite rewards.</p>
+      </div>
+    </div>
+
+    <div class="proof">
+      <div class="proof-card">
+        <div class="num">99.9%</div>
+        <div class="txt">Uptime</div>
+      </div>
+      <div class="proof-card">
+        <div class="num">24/7</div>
+        <div class="txt">Support</div>
+      </div>
+      <div class="proof-card">
+        <div class="num">$2.4M+</div>
+        <div class="txt">Rewards Claimed</div>
+      </div>
+      <div class="proof-card">
+        <div class="num">4.9/5</div>
+        <div class="txt">User Rating</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    © 2026 HentaiCasino. All rights reserved.
+  </div>
+
+  <div class="modal-wrap" id="modalWrap">
+    <div class="modal">
+      <h2>Confirm Access</h2>
+      <p>
+        Your welcome package is ready. Click continue below to enter the platform
+        and activate your bonus.
+      </p>
+      <div class="modal-actions">
+        <button class="confirm" id="finalBtn">Continue</button>
+        <button class="cancel" id="closeModalBtn">Not Now</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const modalWrap = document.getElementById('modalWrap');
+    const openModalBtn = document.getElementById('openModalBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const finalBtn = document.getElementById('finalBtn');
+
+    openModalBtn.addEventListener('click', function () {
+      modalWrap.style.display = 'flex';
+    });
+
+    closeModalBtn.addEventListener('click', function () {
+      modalWrap.style.display = 'none';
+    });
+
+    modalWrap.addEventListener('click', function (e) {
+      if (e.target === modalWrap) {
+        modalWrap.style.display = 'none';
+      }
+    });
+
+    finalBtn.addEventListener('click', function () {
+      window.location.href = 'https://youtu.be/dQw4w9WgXcQ';
+    });
+  </script>
 </body>
 </html>
