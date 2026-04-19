@@ -3,238 +3,414 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hentai Casino</title>
-  <meta name="description" content="Premium online entertainment platform." />
+  <title>HentaiCasino</title>
+  <meta name="description" content="Premium online gaming platform." />
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      color: #fff;
       background:
-        radial-gradient(circle at top, #1e293b 0%, #0f172a 45%, #020617 100%);
-      color: white;
-      min-height: 100vh;
+        radial-gradient(circle at 20% 0%, rgba(255, 0, 128, 0.25), transparent 40%),
+        radial-gradient(circle at 80% 0%, rgba(0, 255, 200, 0.20), transparent 40%),
+        linear-gradient(180deg, #0a0018 0%, #140033 40%, #05000f 100%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
     }
 
     .topbar {
-      width: 100%;
-      padding: 18px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      background: rgba(0,0,0,0.18);
-      backdrop-filter: blur(8px);
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 50;
+      background: rgba(10, 0, 25, 0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .topbar-inner {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
     }
 
     .brand {
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #ff00cc, #00ffee);
+      color: #111827;
+      box-shadow: 0 0 20px rgba(255,0,200,0.6);
+      font-size: 22px;
     }
 
     .brand span {
-      color: #facc15;
+      color: #7df9ff;
     }
 
     .nav {
       display: flex;
-      gap: 18px;
-      font-size: 14px;
-      color: #cbd5e1;
+      gap: 26px;
+      color: #d3d9e7;
+      font-size: 15px;
+    }
+
+    .nav a:hover {
+      color: #fff;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 16px;
+      padding: 14px 20px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.98;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, #ff00cc, #00ffee);
+      color: #0b0016;
+      box-shadow: 0 0 20px rgba(255,0,200,0.4);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.08);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.10);
     }
 
     .hero {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 70px 20px 40px;
+      padding: 38px 0 18px;
+    }
+
+    .hero-grid {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 28px;
-      align-items: center;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 22px;
+      align-items: stretch;
     }
 
-    .hero h1 {
-      margin: 0 0 16px;
-      font-size: 56px;
-      line-height: 1.02;
+    .panel,
+    .game-card,
+    .promo-card,
+    .category-card,
+    .modal {
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 28px;
+      box-shadow: 0 22px 60px rgba(0,0,0,0.26);
+      backdrop-filter: blur(12px);
     }
 
-    .hero p {
-      color: #cbd5e1;
+    .hero-left {
+      padding: 34px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left::after {
+      content: "";
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      right: -80px;
+      top: -100px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(255,0,200,0.4), transparent 65%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,0,200,0.12);
+      border: 1px solid rgba(255,0,200,0.22);
+      color: #ff9ce9;
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: 62px;
+      line-height: 0.98;
+      max-width: 640px;
+      background: linear-gradient(90deg, #ff00cc, #00ffee);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-left p {
+      margin: 0 0 24px;
+      color: #d6def0;
       font-size: 18px;
-      line-height: 1.6;
+      line-height: 1.65;
       max-width: 650px;
-      margin-bottom: 24px;
     }
 
-    .badge-row {
+    .feature-pills {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-bottom: 26px;
+      margin-bottom: 24px;
     }
 
-    .badge {
+    .pill {
       padding: 10px 14px;
       border-radius: 999px;
       background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.10);
       color: #e2e8f0;
       font-size: 14px;
     }
 
-    .cta-row {
+    .hero-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
-    }
-
-    button, .secondary-btn {
-      border: none;
-      cursor: pointer;
-      border-radius: 14px;
-      padding: 16px 24px;
-      font-size: 17px;
-      font-weight: 700;
-      transition: transform 0.15s ease, opacity 0.15s ease;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    button:hover, .secondary-btn:hover {
-      transform: translateY(-1px);
-      opacity: 0.96;
-    }
-
-    .primary-btn {
-      background: linear-gradient(90deg, #22c55e, #facc15);
-      color: #0f172a;
-      box-shadow: 0 10px 30px rgba(250, 204, 21, 0.18);
-    }
-
-    .secondary-btn {
-      background: rgba(255,255,255,0.08);
-      color: white;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .hero-card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 24px;
-      padding: 22px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.32);
-    }
-
-    .jackpot {
-      font-size: 14px;
-      color: #cbd5e1;
-      margin-bottom: 10px;
-    }
-
-    .jackpot-amount {
-      font-size: 42px;
-      font-weight: 800;
-      color: #facc15;
-      margin-bottom: 18px;
-    }
-
-    .mini-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
       gap: 12px;
     }
 
-    .stat {
-      background: rgba(15,23,42,0.55);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 16px;
+    .hero-right {
+      padding: 24px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .panel-title {
+      margin: 0 0 6px;
+      font-size: 26px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .panel-sub {
+      margin: 0 0 16px;
+      color: #b6c2ff;
+      font-size: 14px;
+    }
+
+    .featured-card {
+      display: grid;
+      grid-template-columns: 88px 1fr auto;
+      gap: 16px;
+      align-items: center;
       padding: 16px;
+      border-radius: 22px;
+      background: rgba(10, 14, 26, 0.55);
+      border: 1px solid rgba(255,255,255,0.08);
     }
 
-    .stat .label {
-      font-size: 13px;
-      color: #94a3b8;
-      margin-bottom: 6px;
+    .featured-thumb {
+      width: 88px;
+      height: 88px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      font-size: 34px;
+      background: linear-gradient(135deg, rgba(255,0,200,0.28), rgba(0,255,238,0.16));
+      border: 1px solid rgba(255,255,255,0.08);
     }
 
-    .stat .value {
+    .featured-info h3 {
+      margin: 0 0 6px;
       font-size: 22px;
-      font-weight: 700;
+    }
+
+    .featured-info p {
+      margin: 0;
+      color: #b6c2ff;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .tag {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,0,200,0.15);
+      border: 1px solid rgba(255,0,200,0.30);
+      color: #ff80e6;
+      font-size: 13px;
+      white-space: nowrap;
     }
 
     .section {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 18px 20px 60px;
+      padding: 20px 0 28px;
     }
 
-    .feature-grid {
+    .section-header {
+      margin-bottom: 16px;
+    }
+
+    .section-header h2 {
+      margin: 0 0 6px;
+      font-size: 30px;
+      color: #ffffff;
+    }
+
+    .section-header p {
+      margin: 0;
+      color: #b6c2ff;
+      font-size: 14px;
+    }
+
+    .categories-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 16px;
-      margin-top: 18px;
+      margin-bottom: 24px;
     }
 
-    .feature {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 18px;
+    .category-card {
       padding: 22px;
     }
 
-    .feature h3 {
-      margin: 0 0 10px;
+    .category-card .icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(255,0,200,0.30), rgba(0,255,200,0.20));
+      box-shadow: 0 0 15px rgba(255,0,200,0.3);
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 24px;
+      margin-bottom: 14px;
+    }
+
+    .category-card h3 {
+      margin: 0 0 8px;
       font-size: 18px;
     }
 
-    .feature p {
+    .category-card p {
       margin: 0;
-      color: #cbd5e1;
-      line-height: 1.5;
-      font-size: 15px;
+      color: #b6c2ff;
+      line-height: 1.55;
+      font-size: 14px;
     }
 
-    .proof {
-      margin-top: 26px;
+    .games-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 16px;
     }
 
-    .proof-card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 18px;
+    .game-card {
+      overflow: hidden;
+    }
+
+    .game-top {
+      height: 144px;
+      display: grid;
+      place-items: center;
+      font-size: 46px;
+      background:
+        radial-gradient(circle at top, rgba(0,255,200,0.25), transparent 40%),
+        linear-gradient(135deg, #1a0033, #0a0018);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .game-body {
       padding: 18px;
-      text-align: center;
     }
 
-    .proof-card .num {
-      font-size: 26px;
-      font-weight: 800;
-      color: #facc15;
-      margin-bottom: 6px;
+    .game-body h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
     }
 
-    .proof-card .txt {
-      color: #cbd5e1;
+    .game-body p {
+      margin: 0 0 14px;
+      color: #b6c2ff;
       font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .game-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: #d7deeb;
+      font-size: 13px;
+    }
+
+    .promos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .promo-card {
+      padding: 24px;
+    }
+
+    .promo-card h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+
+    .promo-card p {
+      margin: 0;
+      color: #d6def0;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .center-cta {
+      text-align: center;
+      margin-top: 22px;
+    }
+
+    .footer {
+      padding: 30px 0 42px;
+      text-align: center;
+      color: #94a3b8;
+      font-size: 13px;
     }
 
     .modal-wrap {
       position: fixed;
       inset: 0;
-      background: rgba(2, 6, 23, 0.78);
+      background: rgba(10, 0, 25, 0.90);
+      backdrop-filter: blur(8px);
       display: none;
       align-items: center;
       justify-content: center;
@@ -245,203 +421,354 @@
     .modal {
       width: 100%;
       max-width: 440px;
-      background: #111827;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 24px;
-      padding: 26px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
-      text-align: center;
+      padding: 24px;
     }
 
     .modal h2 {
       margin: 0 0 10px;
-      font-size: 28px;
+      font-size: 30px;
     }
 
     .modal p {
-      margin: 0 0 22px;
-      color: #cbd5e1;
-      line-height: 1.55;
+      margin: 0 0 18px;
+      color: #d6def0;
+      font-size: 15px;
+      line-height: 1.6;
     }
 
-    .modal .modal-actions {
+    .confirm-box {
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      margin-bottom: 16px;
+    }
+
+    .confirm-row {
       display: flex;
+      justify-content: space-between;
       gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
+      font-size: 14px;
+      color: #e5ebf5;
+      margin-bottom: 8px;
     }
 
-    .modal .confirm {
-      background: linear-gradient(90deg, #22c55e, #facc15);
-      color: #0f172a;
-    }
-
-    .modal .cancel {
-      background: rgba(255,255,255,0.08);
-      color: white;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .footer {
-      text-align: center;
-      color: #64748b;
+    .confirm-row:last-child {
+      margin-bottom: 0;
+      color: #b6c2ff;
       font-size: 13px;
-      padding: 24px 20px 38px;
     }
 
-    @media (max-width: 860px) {
-      .hero {
-        grid-template-columns: 1fr;
+    .modal-actions {
+      display: grid;
+      gap: 10px;
+    }
+
+    @media (max-width: 1020px) {
+      .hero-grid,
+      .categories-grid,
+      .games-grid,
+      .promos-grid {
+        grid-template-columns: 1fr 1fr;
       }
 
-      .hero h1 {
-        font-size: 42px;
-      }
-
-      .feature-grid,
-      .proof {
+      .hero-grid {
         grid-template-columns: 1fr;
       }
 
       .nav {
         display: none;
       }
+
+      h1 {
+        font-size: 48px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .topbar-inner {
+        min-height: 68px;
+      }
+
+      .brand {
+        font-size: 22px;
+      }
+
+      h1 {
+        font-size: 38px;
+      }
+
+      .categories-grid,
+      .games-grid,
+      .promos-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .featured-card {
+        grid-template-columns: 72px 1fr;
+      }
+
+      .tag {
+        grid-column: 1 / -1;
+        width: fit-content;
+      }
+
+      .top-actions .btn-secondary {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="topbar">
-    <div class="brand">Hentai<span>Casino</span> 🎰</div>
-    <div class="nav">
-      <div>Games</div>
-      <div>Promotions</div>
-      <div>VIP</div>
-      <div>Support</div>
-    </div>
-  </div>
-
-  <section class="hero">
-    <div>
-      <h1>Premium crypto casino access starts here.</h1>
-      <p>
-        Welcome to the next generation of online entertainment. Fast access,
-        premium rewards, live promotions, and an exclusive VIP experience built
-        for serious players.
-      </p>
-
-      <div class="badge-row">
-        <div class="badge">⚡ Instant Access</div>
-        <div class="badge">💸 Daily Rewards</div>
-        <div class="badge">🔒 Secure Platform</div>
-        <div class="badge">👥 12,847 Online</div>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="brand-icon">🎰</div>
+        <div>Hentai<span>Casino</span></div>
       </div>
 
-      <div class="cta-row">
-        <button class="primary-btn" id="openModalBtn">Claim Welcome Bonus</button>
-        <a class="secondary-btn" href="#features">Explore Features</a>
+      <nav class="nav">
+        <a href="#games">Games</a>
+        <a href="#categories">Categories</a>
+        <a href="#promotions">Promotions</a>
+      </nav>
+
+      <div class="top-actions">
+        <button class="btn btn-secondary" id="loginBtn">Log In</button>
+        <button class="btn btn-primary" id="joinBtn">Play Now</button>
       </div>
     </div>
+  </header>
 
-    <div class="hero-card">
-      <div class="jackpot">LIVE JACKPOT</div>
-      <div class="jackpot-amount">$184,927.44</div>
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="panel hero-left">
+          <div class="eyebrow">Premium game library • Smooth mobile experience</div>
+          <h1>Spin into something better.</h1>
+          <p>
+            Discover a polished collection of featured games, fresh rewards, and a sleek
+            game lobby designed for fast access across desktop and mobile.
+          </p>
 
-      <div class="mini-stats">
-        <div class="stat">
-          <div class="label">Welcome Bonus</div>
-          <div class="value">$10,000</div>
+          <div class="feature-pills">
+            <div class="pill">🎮 Featured Games</div>
+            <div class="pill">🎁 Daily Rewards</div>
+            <div class="pill">📱 Mobile Friendly</div>
+            <div class="pill">✨ Premium Interface</div>
+          </div>
+
+          <div class="hero-actions">
+            <button class="btn btn-primary" id="heroBtn">Enter Lobby</button>
+            <a class="btn btn-secondary" href="#games">Browse Games</a>
+          </div>
         </div>
-        <div class="stat">
-          <div class="label">Players Online</div>
-          <div class="value">12,847</div>
-        </div>
-        <div class="stat">
-          <div class="label">Withdrawals Today</div>
-          <div class="value">4,932</div>
-        </div>
-        <div class="stat">
-          <div class="label">VIP Members</div>
-          <div class="value">1,204</div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <section class="section" id="features">
-    <div class="feature-grid">
-      <div class="feature">
-        <h3>🎁 Massive Promotions</h3>
-        <p>Unlock daily bonuses, seasonal rewards, and exclusive first-time player offers.</p>
-      </div>
-      <div class="feature">
-        <h3>⚡ Instant Gameplay</h3>
-        <p>One-click access to featured games, tournaments, and premium events.</p>
-      </div>
-      <div class="feature">
-        <h3>👑 VIP Experience</h3>
-        <p>Level up your account with high-value benefits, priority support, and elite rewards.</p>
-      </div>
-    </div>
+        <div class="panel hero-right">
+          <h2 class="panel-title">Featured Picks</h2>
+          <p class="panel-sub">A few favorites from the current collection.</p>
 
-    <div class="proof">
-      <div class="proof-card">
-        <div class="num">99.9%</div>
-        <div class="txt">Uptime</div>
-      </div>
-      <div class="proof-card">
-        <div class="num">24/7</div>
-        <div class="txt">Support</div>
-      </div>
-      <div class="proof-card">
-        <div class="num">$2.4M+</div>
-        <div class="txt">Rewards Claimed</div>
-      </div>
-      <div class="proof-card">
-        <div class="num">4.9/5</div>
-        <div class="txt">User Rating</div>
-      </div>
-    </div>
-  </section>
+          <div class="featured-card">
+            <div class="featured-thumb">🎰</div>
+            <div class="featured-info">
+              <h3>Golden Reels</h3>
+              <p>Bright visuals, classic symbols, and a clean premium card layout.</p>
+            </div>
+            <div class="tag">Featured</div>
+          </div>
 
-  <div class="footer">
-    © 2026 HentaiCasino. All rights reserved.
-  </div>
+          <div class="featured-card">
+            <div class="featured-thumb">💎</div>
+            <div class="featured-info">
+              <h3>Diamond Rush</h3>
+              <p>Fast-paced presentation with glossy art and a high-energy feel.</p>
+            </div>
+            <div class="tag">Popular</div>
+          </div>
+
+          <div class="featured-card">
+            <div class="featured-thumb">🃏</div>
+            <div class="featured-info">
+              <h3>Lucky Cards</h3>
+              <p>A stylish card-table theme that rounds out the lobby nicely.</p>
+            </div>
+            <div class="tag">New</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="categories">
+      <div class="container">
+        <div class="section-header">
+          <h2>Categories</h2>
+          <p>Explore different ways to play.</p>
+        </div>
+
+        <div class="categories-grid">
+          <div class="category-card">
+            <div class="icon">🍒</div>
+            <h3>Classic Slots</h3>
+            <p>Traditional reels, familiar symbols, and timeless machine-style presentation.</p>
+          </div>
+
+          <div class="category-card">
+            <div class="icon">⚡</div>
+            <h3>Quick Spin</h3>
+            <p>Faster session flow for players who want an instant-start feel.</p>
+          </div>
+
+          <div class="category-card">
+            <div class="icon">🃏</div>
+            <h3>Card Lounge</h3>
+            <p>Table-inspired games with a more refined and minimal visual style.</p>
+          </div>
+
+          <div class="category-card">
+            <div class="icon">💎</div>
+            <h3>Premium Picks</h3>
+            <p>Highlighted titles with standout visuals and higher-end presentation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="games">
+      <div class="container">
+        <div class="section-header">
+          <h2>Game Lobby</h2>
+          <p>Handpicked titles from across the platform.</p>
+        </div>
+
+        <div class="games-grid">
+          <div class="game-card">
+            <div class="game-top">🍒</div>
+            <div class="game-body">
+              <h3>Cherry Spin</h3>
+              <p>Classic fruit-machine styling with crisp visuals and a smooth layout.</p>
+              <div class="game-meta"><span>Slots</span><span>Demo</span></div>
+            </div>
+          </div>
+
+          <div class="game-card">
+            <div class="game-top">💰</div>
+            <div class="game-body">
+              <h3>Treasure Vault</h3>
+              <p>Gold-themed reels and a premium card design made for the main lobby.</p>
+              <div class="game-meta"><span>Featured</span><span>Popular</span></div>
+            </div>
+          </div>
+
+          <div class="game-card">
+            <div class="game-top">🌙</div>
+            <div class="game-body">
+              <h3>Moonlight Wins</h3>
+              <p>A darker neon-style title that matches the overall site aesthetic.</p>
+              <div class="game-meta"><span>Slots</span><span>New</span></div>
+            </div>
+          </div>
+
+          <div class="game-card">
+            <div class="game-top">🎴</div>
+            <div class="game-body">
+              <h3>Royal Table</h3>
+              <p>Clean card-table presentation with a more refined visual direction.</p>
+              <div class="game-meta"><span>Cards</span><span>Lobby</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="center-cta">
+          <button class="btn btn-primary" id="gamesBtn">Open Full Lobby</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="promotions">
+      <div class="container">
+        <div class="section-header">
+          <h2>Promotions</h2>
+          <p>Fresh offers and rotating highlights.</p>
+        </div>
+
+        <div class="promos-grid">
+          <div class="promo-card">
+            <h3>🎁 Welcome Rewards</h3>
+            <p>Kick things off with a featured welcome offer available to new players.</p>
+          </div>
+
+          <div class="promo-card">
+            <h3>✨ Daily Bonuses</h3>
+            <p>Check back for fresh bonuses and rotating featured offers across the platform.</p>
+          </div>
+
+          <div class="promo-card">
+            <h3>📱 Mobile Ready</h3>
+            <p>Enjoy the same polished layout and easy access across phones, tablets, and desktop.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container footer">
+      © 2026 HentaiCasino
+    </div>
+  </main>
 
   <div class="modal-wrap" id="modalWrap">
     <div class="modal">
       <h2>Confirm Access</h2>
-      <p>
-        Your welcome package is ready. Click continue below to enter the platform
-        and activate your bonus.
-      </p>
+      <p>Your game session is ready. Continue below to enter the main lobby.</p>
+
+      <div class="confirm-box">
+        <div class="confirm-row">
+          <span>Destination</span>
+          <strong>Main Lobby</strong>
+        </div>
+        <div class="confirm-row">
+          <span>Access Type</span>
+          <span>Guest Session</span>
+        </div>
+      </div>
+
       <div class="modal-actions">
-        <button class="confirm" id="finalBtn">Continue</button>
-        <button class="cancel" id="closeModalBtn">Not Now</button>
+        <button class="btn btn-primary" id="continueBtn">Continue</button>
+        <button class="btn btn-secondary" id="cancelBtn">Not Now</button>
       </div>
     </div>
   </div>
 
   <script>
     const modalWrap = document.getElementById('modalWrap');
-    const openModalBtn = document.getElementById('openModalBtn');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    const finalBtn = document.getElementById('finalBtn');
+    const continueBtn = document.getElementById('continueBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
 
-    openModalBtn.addEventListener('click', function () {
-      modalWrap.style.display = 'flex';
+    const openers = [
+      document.getElementById('joinBtn'),
+      document.getElementById('heroBtn'),
+      document.getElementById('gamesBtn'),
+      document.getElementById('loginBtn')
+    ];
+
+    openers.forEach((btn) => {
+      if (btn) {
+        btn.addEventListener('click', () => {
+          modalWrap.style.display = 'flex';
+        });
+      }
     });
 
-    closeModalBtn.addEventListener('click', function () {
+    cancelBtn.addEventListener('click', () => {
       modalWrap.style.display = 'none';
     });
 
-    modalWrap.addEventListener('click', function (e) {
+    modalWrap.addEventListener('click', (e) => {
       if (e.target === modalWrap) {
         modalWrap.style.display = 'none';
       }
     });
 
-    finalBtn.addEventListener('click', function () {
+    continueBtn.addEventListener('click', () => {
       window.location.href = 'https://youtu.be/dQw4w9WgXcQ';
     });
   </script>
